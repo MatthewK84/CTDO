@@ -27,12 +27,12 @@ A Streamlit web application for managing drone component inventory with real-tim
 
 ### Features
 
-- Multi-sheet dashboard displaying all inventory categories in organized tabs
-- Low stock highlighting for quantities under threshold
-- Image storage capability for each inventory item (SQLite backend)
-- Automated order request generation for items at critical stock levels
-- File upload support to refresh inventory data
-- Search and filter functionality across all columns
+- Multi-sheet dashboard displaying all inventory categories in organized tabs.
+- Low stock highlighting for quantities under threshold.
+- Image storage capability for each inventory item (SQLite backend).
+- Automated order request generation for items at critical stock levels.
+- File upload support to refresh inventory data.
+- Search and filter functionality across all columns.
 
 ### Inventory Categories
 
@@ -135,16 +135,16 @@ The program transmits DIS Signal PDUs at approximately 10 Hz. Terminal output co
 
 To verify output without a dedicated GCS:
 
-1. Install Wireshark on the target machine
-2. Start a capture on the relevant network interface
-3. Apply display filter: `dis`
-4. Inspect incoming Signal PDU packets
-5. Expand the Data field to view the SISO-STD-002 Link 16 Simulation Header and J-Series payload
+1. Install Wireshark on the target machine.
+2. Start a capture on the relevant network interface.
+3. Apply display filter: `dis`.
+4. Inspect incoming Signal PDU packets.
+5. Expand the Data field to view the SISO-STD-002 Link 16 Simulation Header and J-Series payload.
 
 ---
 
 ## Disclaimer
 
-The Link 16 Simulation Gateway is intended strictly for educational, research, and simulation purposes. It implements unclassified simulation standards defined by SISO-STD-002. It does not contain, process, or generate classified cryptographic variables, waveforms, or restricted military data. Do not attempt to interface with operational cryptographic terminals (CCI) without proper authorization and hardware certification.
+The Link 16 Simulation Gateway is intended strictly for research and simulation purposes. It implements unclassified simulation standards defined by SISO-STD-002. It does not contain, process, or generate classified cryptographic variables, waveforms, or restricted military data. Do not attempt to interface with operational cryptographic terminals (CCI) without proper authorization and hardware certification.
 
 ---
