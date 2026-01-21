@@ -118,7 +118,3 @@ To verify output without a dedicated GCS:
 > **Do not attempt to interface with operational cryptographic terminals (CCI) without proper authorization and hardware certification.**
 
 ---
-
-## License
-
-*Add your license here*
