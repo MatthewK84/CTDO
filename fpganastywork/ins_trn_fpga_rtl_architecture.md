@@ -12,7 +12,7 @@
 ## Table of Contents
 
 1. [System Overview](#system-overview)
-2. [Top-Level Block Diagram](#top-level-block-diagram)
+2. [Top Level Block Diagram](#top-level-block-diagram)
 3. [Module Hierarchy](#module-hierarchy)
 4. [Clock and Reset Architecture](#clock-and-reset-architecture)
 5. [Module Descriptions](#module-descriptions)
@@ -31,18 +31,18 @@
 
 ## System Overview
 
-This RTL implements the real-time components of an error-state Kalman filter for INS/TRN fusion. The FPGA handles high-rate sensor processing and state propagation, while the Raspberry Pi 5 handles terrain correlation and filter updates.
+The RTL implements the components of an error state Kalman filter for INS/TRN fusion. The FPGA handles high rate sensor processing and state propagation, while the Raspberry Pi 5 handles terrain correlation and filter updates.
 
 ### Design Philosophy
 
-- **Deterministic timing**: Fixed-latency pipelines for sensor processing
-- **Numerical precision**: 32-bit IEEE 754 single-precision floating point
-- **Modular architecture**: Each functional block is independently testable
-- **PS/PL partitioning**: FPGA handles rate-critical math; ARM handles configuration and TRN
+- **Deterministic Timing**: Fixed-latency pipelines for sensor processing.
+- **Numerical Precision**: 32-bit IEEE 754 single precision floating point.
+- **Modular Architecture**: Each functional block is independently testable.
+- **PS/PL Partitioning**: FPGA handles rate critical math; ARM handles configuration and TRN.
 
 ---
 
-## Top-Level Block Diagram
+## Top Level Block Diagram
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────────────┐
