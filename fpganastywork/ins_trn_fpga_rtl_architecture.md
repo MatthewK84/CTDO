@@ -5,7 +5,7 @@
 **Target Platform:** Xilinx Zynq-7020 (Zybo Z7-20)  
 **Design Language:** SystemVerilog / Verilog  
 **Clock Domain:** 100 MHz system clock, 200 MHz DSP clock  
-**Interface:** AXI4-Lite to PS, SPI to sensors
+**Interface:** AXI4 Lite to PS, SPI to sensors
 
 ---
 
