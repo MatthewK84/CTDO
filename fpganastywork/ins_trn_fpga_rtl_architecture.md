@@ -1,6 +1,6 @@
 # INS + TRN FPGA RTL Architecture
 
-## GPS-Denied Navigation System for Zybo Z7-20
+## GPS Denied Navigation System for Zybo Z7-20
 
 **Target Platform:** Xilinx Zynq-7020 (Zybo Z7-20)  
 **Design Language:** SystemVerilog / Verilog  
