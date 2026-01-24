@@ -46,11 +46,11 @@ This architecture implements a GPS-denied navigation system using terrain-relati
 
 ### Design Philosophy
 
-- **Separation of concerns**: Flight-critical control on certified hardware (CubeOrange)
-- **Deterministic navigation**: Hard real-time INS on PolarFire E51 core
-- **Flash-based reliability**: No FPGA configuration upsets at altitude
-- **Low power**: ~3W total for navigation computer (vs 8-12W for Zynq UltraScale+)
-- **MAVLink native**: Standard interface to flight controller ecosystem
+- **Separation of concerns**: Flight-critical control on certified hardware (CubeOrange).
+- **Deterministic navigation**: Hard real-time INS on PolarFire E51 core.
+- **Flash-based reliability**: No FPGA configuration upsets at altitude.
+- **Low power**: ~3W total for navigation computer (vs 8-12W for Zynq UltraScale+).
+- **MAVLink native**: Standard interface to flight controller ecosystem.
 
 ### Why PolarFire SoC?
 
@@ -217,29 +217,29 @@ This architecture implements a GPS-denied navigation system using terrain-relati
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────────────────────┐
-│                                    SYSTEM ARCHITECTURE                                       │
+│                                    SYSTEM ARCHITECTURE                                      │
 │                                                                                             │
-│  ┌─────────────────────────────────────────────────────────────────────────────────────┐   │
+│  ┌─────────────────────────────────────────────────────────────────────────────────────┐    │
 │  │                              CubeOrange+ Flight Controller                           │   │
 │  │                                                                                      │   │
-│  │   ┌─────────────┐    ┌─────────────┐    ┌─────────────┐    ┌─────────────┐         │   │
-│  │   │  PX4/AP     │    │   EKF2/3    │    │   Mixer     │    │   Motors    │         │   │
-│  │   │  Firmware   │◄──►│   Filter    │───►│   Outputs   │───►│   ESCs      │         │   │
-│  │   └──────┬──────┘    └──────┬──────┘    └─────────────┘    └─────────────┘         │   │
-│  │          │                  │                                                       │   │
-│  │          │ MAVLink          │ VISION_POSITION_ESTIMATE                             │   │
-│  │          │ UART             │ (from PolarFire)                                      │   │
-│  └──────────┼──────────────────┼───────────────────────────────────────────────────────┘   │
+│  │   ┌─────────────┐    ┌─────────────┐    ┌─────────────┐    ┌─────────────┐           │   │
+│  │   │  PX4/AP     │    │   EKF2/3    │    │   Mixer     │    │   Motors    │           │   │
+│  │   │  Firmware   │◄──►│   Filter    │───►│   Outputs   │───►│   ESCs      │           │   │
+│  │   └──────┬──────┘    └──────┬──────┘    └─────────────┘    └─────────────┘           │   │
+│  │          │                  │                                                        │   │
+│  │          │ MAVLink          │ VISION_POSITION_ESTIMATE                               │   │
+│  │          │ UART             │ (from PolarFire)                                       │   │
+│  └──────────┼──────────────────┼───────────────────────────────────────────────────────┘    │
 │             │                  │                                                            │
 │             │ 921600 baud      │                                                            │
 │             │ TELEM2 port      │                                                            │
 │             ▼                  ▼                                                            │
-│  ┌─────────────────────────────────────────────────────────────────────────────────────┐   │
-│  │                              PolarFire SoC Navigation Computer                       │   │
-│  │                                                                                      │   │
-│  │   ┌───────────────────────────────────────────────────────────────────────────┐     │   │
-│  │   │                        MSS (RISC-V Cores)                                 │     │   │
-│  │   │                                                                           │     │   │
+│  ┌─────────────────────────────────────────────────────────────────────────────────────┐    │
+│  │                              PolarFire SoC Navigation Computer                     │   │
+│  │                                                                                    │   │
+│  │   ┌───────────────────────────────────────────────────────────────────────────┐    │   │
+│  │   │                        MSS (RISC-V Cores)                                 │    │   │
+│  │   │                                                                           │    │   │
 │  │   │   ┌─────────────┐    ┌─────────────┐    ┌─────────────┐                  │     │   │
 │  │   │   │    E51      │    │  U54 Core 1 │    │  U54 Core 2 │                  │     │   │
 │  │   │   │ (Bare-Metal)│    │  (Linux)    │    │  (Linux)    │                  │     │   │
@@ -255,44 +255,44 @@ This architecture implements a GPS-denied navigation system using terrain-relati
 │  │   │   ┌─────────────────────────────────────────────────────────────────┐   │     │   │
 │  │   │   │              Shared Memory (L2 Scratchpad)                      │   │     │   │
 │  │   │   │                                                                 │   │     │   │
-│  │   │   │   ┌─────────────┐  ┌─────────────┐  ┌─────────────┐            │   │     │   │
-│  │   │   │   │  INS State  │  │  TRN Fix    │  │  Altitude   │            │   │     │   │
-│  │   │   │   │  (current)  │  │  (latest)   │  │  Profile    │            │   │     │   │
-│  │   │   │   └─────────────┘  └─────────────┘  └─────────────┘            │   │     │   │
+│  │   │   │   ┌─────────────┐  ┌─────────────┐  ┌─────────────┐             │   │     │   │
+│  │   │   │   │  INS State  │  │  TRN Fix    │  │  Altitude   │             │   │     │   │
+│  │   │   │   │  (current)  │  │  (latest)   │  │  Profile    │             │   │     │   │
+│  │   │   │   └─────────────┘  └─────────────┘  └─────────────┘             │   │     │   │
 │  │   │   │                                                                 │   │     │   │
 │  │   │   └─────────────────────────────────────────────────────────────────┘   │     │   │
 │  │   │                                                                           │     │   │
 │  │   └───────────────────────────────────────────────────────────────────────────┘     │   │
 │  │                                          │                                          │   │
-│  │                                    APB/AHB Bus                                       │   │
+│  │                                    APB/AHB Bus                                      │   │
 │  │                                          │                                          │   │
 │  │   ┌───────────────────────────────────────────────────────────────────────────┐     │   │
 │  │   │                         FPGA Fabric                                       │     │   │
 │  │   │                                                                           │     │   │
-│  │   │   ┌─────────────┐    ┌─────────────┐    ┌─────────────┐                  │     │   │
-│  │   │   │    SPI      │    │    IMU      │    │    INS      │                  │     │   │
-│  │   │   │   Master    │───►│  Interface  │───►│   Accel     │                  │     │   │
-│  │   │   │  (2 MHz)    │    │ (calibrate) │    │  Engine     │                  │     │   │
-│  │   │   └─────────────┘    └─────────────┘    └──────┬──────┘                  │     │   │
-│  │   │                                                │                         │     │   │
-│  │   │   ┌─────────────┐    ┌─────────────┐          ▼                         │     │   │
-│  │   │   │    SPI      │    │    Baro     │    ┌─────────────┐                  │     │   │
-│  │   │   │   Master    │───►│  Interface  │    │ Covariance  │                  │     │   │
-│  │   │   │  (Baro)     │    │             │    │ Propagator  │                  │     │   │
-│  │   │   └─────────────┘    └─────────────┘    └──────┬──────┘                  │     │   │
-│  │   │                                                │                         │     │   │
-│  │   │   ┌─────────────┐    ┌─────────────┐          ▼                         │     │   │
-│  │   │   │   UART      │    │   LiDAR     │    ┌─────────────┐                  │     │   │
-│  │   │   │    RX       │───►│  Interface  │───►│   Kalman    │                  │     │   │
-│  │   │   │ (115200)    │    │             │    │   Update    │                  │     │   │
-│  │   │   └─────────────┘    └─────────────┘    └──────┬──────┘                  │     │   │
-│  │   │                                                │                         │     │   │
-│  │   │                                                ▼                         │     │   │
-│  │   │                                         ┌─────────────┐                  │     │   │
-│  │   │                                         │    State    │                  │     │   │
-│  │   │                                         │   Memory    │                  │     │   │
-│  │   │                                         │   (LSRAM)   │                  │     │   │
-│  │   │                                         └─────────────┘                  │     │   │
+│  │   │   ┌─────────────┐    ┌─────────────┐    ┌─────────────┐                   │     │   │
+│  │   │   │    SPI      │    │    IMU      │    │    INS      │                   │     │   │
+│  │   │   │   Master    │───►│  Interface  │───►│   Accel     │                   │     │   │
+│  │   │   │  (2 MHz)    │    │ (calibrate) │    │  Engine     │                   │     │   │
+│  │   │   └─────────────┘    └─────────────┘    └──────┬──────┘                   │     │   │
+│  │   │                                                │                          │     │   │
+│  │   │   ┌─────────────┐    ┌─────────────┐          ▼                           │     │   │
+│  │   │   │    SPI      │    │    Baro     │    ┌─────────────┐                   │     │   │
+│  │   │   │   Master    │───►│  Interface  │    │ Covariance  │                   │     │   │
+│  │   │   │  (Baro)     │    │             │    │ Propagator  │                   │     │   │
+│  │   │   └─────────────┘    └─────────────┘    └──────┬──────┘                   │     │   │
+│  │   │                                                │                          │     │   │
+│  │   │   ┌─────────────┐    ┌─────────────┐          ▼                           │     │   │
+│  │   │   │   UART      │    │   LiDAR     │    ┌─────────────┐                   │     │   │
+│  │   │   │    RX       │───►│  Interface  │───►│   Kalman    │                   │     │   │
+│  │   │   │ (115200)    │    │             │    │   Update    │                   │     │   │
+│  │   │   └─────────────┘    └─────────────┘    └──────┬──────┘                   │     │   │
+│  │   │                                                │                          │     │   │
+│  │   │                                                ▼                          │     │   │
+│  │   │                                         ┌─────────────┐                   │     │   │
+│  │   │                                         │    State    │                   │     │   │
+│  │   │                                         │   Memory    │                   │     │   │
+│  │   │                                         │   (LSRAM)   │                   │     │   │
+│  │   │                                         └─────────────┘                   │     │   │
 │  │   │                                                                           │     │   │
 │  │   └───────────────────────────────────────────────────────────────────────────┘     │   │
 │  │                                                                                      │   │
